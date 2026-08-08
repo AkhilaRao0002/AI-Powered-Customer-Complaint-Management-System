@@ -1,0 +1,803 @@
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fb;
+  color: #1f2937;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ======================================================
+   MAIN APP
+====================================================== */
+
+.app {
+  min-height: 100vh;
+  padding: 22px 28px;
+}
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 25px;
+  color: #172033;
+}
+
+.app-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.status-badge {
+  background: #e8f5ee;
+  color: #198754;
+  border: 1px solid #b8e2c8;
+  padding: 7px 13px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ======================================================
+   TWO COLUMN LAYOUT
+   50 / 50
+====================================================== */
+
+.main-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  height: calc(100vh - 115px);
+  min-height: 650px;
+  align-items: stretch;
+}
+
+/* ======================================================
+   PANELS
+====================================================== */
+
+.panel {
+  background: white;
+  border: 1px solid #e2e6ed;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  min-width: 0;
+}
+
+/* LEFT SIDE */
+.ai-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* RIGHT SIDE */
+.complaint-panel {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ======================================================
+   PANEL HEADER
+====================================================== */
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 18px 20px;
+  border-bottom: 1px solid #edf0f4;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 17px;
+  color: #202938;
+}
+
+.panel-header p {
+  margin: 5px 0 0;
+  color: #7a8493;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ======================================================
+   BADGES
+====================================================== */
+
+.beta-badge {
+  background: #eaf0ff;
+  color: #315dcc;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.pending-badge {
+  background: #fff8e8;
+  color: #b77900;
+  border: 1px solid #f0d68a;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.complete-badge {
+  background: #e8f5ee;
+  color: #198754;
+  border: 1px solid #b8e2c8;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.ai-generated-badge {
+  background: #eaf0ff;
+  color: #356ae6;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+/* ======================================================
+   AI COPILOT
+====================================================== */
+
+.copilot-section {
+  padding: 18px 20px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.copilot-section label,
+.form-section label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 7px;
+}
+
+/* ======================================================
+   CHAT CONTAINER
+====================================================== */
+
+.chat-container {
+  padding: 18px 20px;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Your JSX uses chat-container directly */
+.chat-container {
+  overflow-y: auto;
+}
+
+/* ======================================================
+   EMPTY CHAT
+====================================================== */
+
+.empty-chat {
+  min-height: 320px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #7a8493;
+  padding: 25px;
+}
+
+.large-ai-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #eaf0ff;
+  color: #356ae6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 13px;
+}
+
+.empty-chat h3 {
+  margin: 0 0 7px;
+  font-size: 14px;
+  color: #344054;
+}
+
+.empty-chat p {
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 320px;
+}
+
+.example-prompts {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 15px;
+}
+
+.example-prompts span {
+  padding: 7px 10px;
+  background: #f5f7fb;
+  border: 1px solid #e1e6ee;
+  border-radius: 6px;
+  font-size: 10px;
+  color: #68758a;
+}
+
+/* ======================================================
+   CHAT MESSAGES
+====================================================== */
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.chat-message.user {
+  align-items: flex-end;
+}
+
+.chat-message.assistant,
+.chat-message.ai {
+  align-items: flex-start;
+}
+
+.chat-message.system {
+  align-items: center;
+}
+
+.chat-role {
+  font-size: 9px;
+  font-weight: 700;
+  color: #7a8493;
+  margin-bottom: 4px;
+}
+
+.chat-bubble {
+  max-width: 85%;
+  padding: 10px 12px;
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.chat-message.user .chat-bubble {
+  background: #356ae6;
+  color: white;
+  border-bottom-right-radius: 2px;
+}
+
+.chat-message.assistant .chat-bubble,
+.chat-message.ai .chat-bubble {
+  background: white;
+  color: #3f4856;
+  border: 1px solid #dfe4eb;
+  border-bottom-left-radius: 2px;
+}
+
+.chat-message.system .chat-bubble {
+  background: #f5f7fb;
+  color: #68758a;
+  border: 1px solid #e1e6ee;
+  font-size: 10px;
+}
+
+.chat-error {
+  background: #fff4f4 !important;
+  border-color: #f0caca !important;
+  color: #b42318 !important;
+}
+
+/* ======================================================
+   COPILOT INPUT
+====================================================== */
+
+.copilot-input-area {
+  padding: 14px 20px 18px;
+  border-top: 1px solid #edf0f4;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.copilot-input-area textarea {
+  width: 100%;
+  min-height: 70px;
+  max-height: 130px;
+  resize: vertical;
+}
+
+.copilot-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 9px;
+}
+
+/* ======================================================
+   UPLOAD BUTTON
+====================================================== */
+
+.upload-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  height: 38px;
+  padding: 8px 12px;
+  background: #eef2ff;
+  color: #315dcc;
+  border: 1px solid #dce4ff;
+  border-radius: 6px;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  margin: 0 !important;
+}
+
+.upload-button:hover {
+  background: #e3eaff;
+}
+
+.upload-button input {
+  display: none;
+}
+
+/* ======================================================
+   SEND BUTTON
+====================================================== */
+
+.primary-button {
+  flex: 1;
+  height: 38px;
+  border: none;
+  border-radius: 6px;
+  background: #356ae6;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.primary-button:hover {
+  background: #2859cc;
+}
+
+/* ======================================================
+   SELECTED FILE
+====================================================== */
+
+.selected-file {
+  margin: 0 20px 10px;
+  padding: 9px 11px;
+  border: 1px solid #dce4ff;
+  background: #f5f7ff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 10px;
+  color: #315dcc;
+}
+
+.selected-file button {
+  border: none;
+  background: transparent;
+  color: #7a8493;
+  font-size: 17px;
+  line-height: 1;
+}
+
+/* ======================================================
+   MISSING INFORMATION
+====================================================== */
+
+.missing-info-box {
+  margin: 0 20px 12px;
+  padding: 12px 14px;
+  background: #fff9eb;
+  border: 1px solid #f0d68a;
+  border-radius: 7px;
+  color: #8a6500;
+  flex-shrink: 0;
+}
+
+.missing-info-box strong {
+  font-size: 11px;
+}
+
+.missing-info-box p {
+  margin: 5px 0;
+  font-size: 10px;
+}
+
+.missing-info-box ul {
+  margin: 5px 0 0;
+  padding-left: 18px;
+}
+
+.missing-info-box li {
+  font-size: 10px;
+  margin-bottom: 3px;
+}
+
+/* ======================================================
+   GENERAL INPUTS
+====================================================== */
+
+textarea,
+input,
+select {
+  width: 100%;
+  border: 1px solid #d8dde6;
+  border-radius: 6px;
+  padding: 9px 10px;
+  font-size: 12px;
+  color: #273142;
+  background: #fff;
+  outline: none;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+  border-color: #5b7cfa;
+  box-shadow: 0 0 0 2px rgba(91, 124, 250, 0.08);
+}
+
+textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+input {
+  height: 37px;
+}
+
+/* ======================================================
+   FORM SECTIONS
+====================================================== */
+
+.form-section {
+  padding: 17px 20px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.form-section h3 {
+  margin: 0 0 14px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #68758a;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+
+.form-grid .full {
+  grid-column: 1 / -1;
+}
+
+.form-section label {
+  margin-bottom: 12px;
+}
+
+.form-section label:last-child {
+  margin-bottom: 0;
+}
+
+.form-section textarea {
+  min-height: 80px;
+}
+
+/* ======================================================
+   AI ASSESSMENT
+====================================================== */
+
+.ai-assessment {
+  background: #fafbff;
+}
+
+.assessment-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.assessment-title h3 {
+  margin: 0 0 4px;
+  color: #243b73;
+  font-size: 12px;
+}
+
+.assessment-title p {
+  margin: 0;
+  font-size: 10px;
+  color: #7a8493;
+}
+
+.ai-assessment textarea {
+  background: #f8f9fc;
+}
+
+/* ======================================================
+   RISK LEVELS
+====================================================== */
+
+.risk-low {
+  color: #198754 !important;
+}
+
+.risk-medium {
+  color: #d18a00 !important;
+}
+
+.risk-high {
+  color: #dc5a35 !important;
+}
+
+.risk-critical {
+  color: #c62828 !important;
+}
+
+/* ======================================================
+   SAVE / QMS
+====================================================== */
+
+.save-section {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  background: white;
+}
+
+.save-button {
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #356ae6;
+  color: white;
+  min-width: 170px;
+}
+
+.save-button:hover {
+  background: #2859cc;
+}
+
+.qms-success {
+  margin: 0 20px 18px;
+  padding: 12px;
+  background: #f0f8f3;
+  border: 1px solid #cce6d5;
+  border-radius: 6px;
+  color: #267344;
+  font-size: 11px;
+}
+
+/* ======================================================
+   MESSAGE
+====================================================== */
+
+.message {
+  margin: 0 20px 18px;
+  padding: 10px;
+  background: #f0f8f3;
+  border: 1px solid #cce6d5;
+  color: #267344;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+/* ======================================================
+   NEW COMPLAINT BUTTON
+====================================================== */
+
+.reload-button {
+  margin: 0 20px 18px;
+  width: calc(100% - 40px);
+  padding: 11px 18px;
+  border: 1px solid #d1d7e0;
+  border-radius: 7px;
+  background: white;
+  color: #333;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.reload-button:hover {
+  background: #f5f7fb;
+  border-color: #b8c1cf;
+}
+
+.reload-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ======================================================
+   RIGHT PANEL SCROLLBAR
+====================================================== */
+
+.complaint-panel::-webkit-scrollbar {
+  width: 7px;
+}
+
+.complaint-panel::-webkit-scrollbar-track {
+  background: #f4f6f9;
+}
+
+.complaint-panel::-webkit-scrollbar-thumb {
+  background: #c5ccd7;
+  border-radius: 10px;
+}
+
+.complaint-panel::-webkit-scrollbar-thumb:hover {
+  background: #aeb7c5;
+}
+
+/* ======================================================
+   LEFT CHAT SCROLLBAR
+====================================================== */
+
+.chat-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background: #f4f6f9;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background: #c7ced9;
+  border-radius: 10px;
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 1000px) {
+
+  .app {
+    padding: 18px;
+  }
+
+  .main-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .ai-panel,
+  .complaint-panel {
+    height: auto;
+    max-height: none;
+  }
+
+  .complaint-panel {
+    overflow: visible;
+  }
+
+  .chat-container {
+    min-height: 400px;
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .app {
+    padding: 12px;
+  }
+
+  .app-header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .app-header h1 {
+    font-size: 20px;
+  }
+
+  .status-badge {
+    display: none;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .copilot-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .upload-button,
+  .primary-button {
+    width: 100%;
+  }
+
+  .save-section {
+    padding: 14px;
+  }
+
+  .save-button {
+    width: 100%;
+  }
+
+  .panel-header {
+    padding: 15px;
+  }
+
+  .form-section {
+    padding: 15px;
+  }
+
+  .chat-container {
+    padding: 15px;
+  }
+
+  .copilot-input-area {
+    padding: 12px 15px 15px;
+  }
+}
